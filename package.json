@@ -1,0 +1,23 @@
+{
+  "name": "elasticsearch-query",
+  "version": "0.1.0",
+  "description": "Simple query DSL for elasticsearch",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/malkomalko/elasticsearch-query.git"
+  },
+  "keywords": [
+    "dsl",
+    "query",
+    "elasticsearch"
+  ],
+  "author": "Robert Malko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/malkomalko/elasticsearch-query/issues"
+  }
+}
