@@ -2,6 +2,4 @@
  * Exports.
  */
 
-module.exports = {
-  version: require('./lib/version')
-};
+module.exports = require('./lib/base');
