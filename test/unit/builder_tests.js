@@ -7,13 +7,30 @@ describe('#buildQuery', function () {
   it('turns $f key into filter', function () {
     var actual = subject.buildQuery({ $f: { name: 'foo' }});
 
-    expect(actual).eql({ filter: { name: 'foo' }});
+    expect(actual).keys('filter');
   });
 
   it('turns $q key into query', function () {
     var actual = subject.buildQuery({ $q: { name: 'foo' }});
 
-    expect(actual).eql({ query: { name: 'foo' }});
+    expect(actual).keys('query');
+  });
+
+  it('defaults $q object to match query for each key', function () {
+    var actual = subject.buildQuery({
+      $q: { name: 'foo', bar: 'baz' }
+    });
+
+    expect(actual).eql({
+      query: {
+        bool: {
+          must: [
+            { match: { name: 'foo' }},
+            { match: { bar: 'baz' }}
+          ]
+        }
+      }
+    });
   });
 
 });
