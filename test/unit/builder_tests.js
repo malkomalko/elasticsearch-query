@@ -26,4 +26,11 @@ describe('#optsWithScope', function () {
     expect(opts.type).eql('bar*,baz*');
   });
 
+  it('treats empty strings as _all index', function () {
+    expect(subject.optsWithScope('').index).eql('_all');
+    expect(subject.optsWithScope('   ').index).eql('_all');
+    expect(subject.optsWithScope(null).index).eql('_all');
+    expect(subject.optsWithScope(undefined).index).eql('_all');
+  });
+
 });
