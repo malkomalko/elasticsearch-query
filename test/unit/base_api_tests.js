@@ -28,13 +28,26 @@ describe('searching', function () {
   });
 
   it('proxys call to elasticsearch driver', function () {
-    this.es.search();
+    this.es.search('/foo', {});
 
     expect(this.es.client.search).called;
   });
 
   it('takes in a scope for the query as first param', function () {
-    this.es.search('/tests/test');
+    this.es.search('/tests/test', {});
+
+    expect(this.es.client.search).calledWithMatch({
+      index: 'tests',
+      type: 'test'
+    });
+  });
+
+  it('autocurrys if passed only scope', function () {
+    var curry = this.es.search('/tests/test');
+
+    expect(this.es.client.search).not.called;
+
+    curry({});
 
     expect(this.es.client.search).calledWithMatch({
       index: 'tests',
