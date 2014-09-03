@@ -2,6 +2,22 @@
 
 var subject = require('builder');
 
+describe('#buildQuery', function () {
+
+  it('turns $f key into filter', function () {
+    var actual = subject.buildQuery({ $f: { name: 'foo' }});
+
+    expect(actual).eql({ filter: { name: 'foo' }});
+  });
+
+  it('turns $q key into query', function () {
+    var actual = subject.buildQuery({ $q: { name: 'foo' }});
+
+    expect(actual).eql({ query: { name: 'foo' }});
+  });
+
+});
+
 describe('#optsWithScope', function () {
 
   it('sets index with forward slash', function () {
