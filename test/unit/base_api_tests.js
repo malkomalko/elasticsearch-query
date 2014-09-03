@@ -21,8 +21,9 @@ describe('initializing with connection', function () {
 describe('searching', function () {
 
   beforeEach(function () {
-    this.es = new subject({ host: 'localhost:9200' });
-    this.promise = {
+    this.callback = spy();
+    this.es       = new subject({ host: 'localhost:9200' });
+    this.promise  = {
       then: function (success, error) {}
     };
 
@@ -55,6 +56,35 @@ describe('searching', function () {
       index: 'tests',
       type: 'test'
     });
+  });
+
+  it('returns the hits', function () {
+    var res = {
+      foo: 'bar',
+      hits: {
+        baz: 'boo',
+        hits: [
+          { name: 'jane' },
+          { name: 'jim' }
+        ]
+      }
+    };
+
+    stub(this.promise, 'then').yields(res);
+
+    this.es.search('/tests/test', {}, this.callback);
+
+    expect(this.callback).calledWith(null, res.hits.hits);
+  });
+
+  it('handles errors while searching', function () {
+    var err = new Error('failure');
+
+    stub(this.promise, 'then').callsArgWith(1, err);
+
+    this.es.search('/tests/test', {}, this.callback);
+
+    expect(this.callback).calledWith(err);
   });
 
 });
