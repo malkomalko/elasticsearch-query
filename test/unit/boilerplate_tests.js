@@ -1,3 +1,5 @@
+/* jshint expr: true */
+
 var subject = require('../../index');
 
 describe('#version', function () {
