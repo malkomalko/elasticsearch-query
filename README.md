@@ -22,4 +22,24 @@ tweets({}, log);
 
 // query dsl (very early)
 tweets({ $q: { name: 'john', tweet: 'api' }}, log);
+
+// output of query above that's passed to native elasticsearch driver
+{
+  body: {
+    query: {
+      filtered: {
+        query: {
+          bool: {
+            must: [
+              { match: { name: 'john' } },
+              { match: { tweet: 'api' } }
+            ]
+          }
+        }
+      }
+    }
+  },
+  index: 'test',
+  type: 'tweet'
+}
 ```
